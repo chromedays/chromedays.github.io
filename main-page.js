@@ -12,6 +12,30 @@ import * as vec3 from "https://unpkg.com/gl-matrix@3.1.0/esm/vec3.js?module";
 var canvas;
 var gl;
 
+function createPolygonVertexBuffer(edgeCount) {
+  const vb = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, vb);
+  const vertexCount = edgeCount + 2;
+  var vertices = [0.0, 0.0, 0.0];
+  {
+    var step = common.toRadian(360.0 / edgeCount);
+    var i;
+    for (i = 0; i < edgeCount + 1; i++) {
+      vertices.push(Math.cos(step * i), Math.sin(step * i), 0.0);
+    }
+  }
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+
+  return {
+    buffer: vb,
+    vertexCount: vertexCount
+  };
+}
+
+function destroyPolygonVertexBuffer(vb) {
+  gl.deleteBuffer(vb.buffer);
+}
+
 class MainPage extends LitElement {
   constructor() {
     super();
@@ -52,102 +76,86 @@ class MainPage extends LitElement {
       console.log("failed to compile fragment shader");
     }
 
-    const shader = gl.createProgram();
-    gl.attachShader(shader, vs);
-    gl.attachShader(shader, fs);
-    gl.linkProgram(shader);
-    if (!gl.getProgramParameter(shader, gl.LINK_STATUS)) {
+    this.shader = gl.createProgram();
+    gl.attachShader(this.shader, vs);
+    gl.attachShader(this.shader, fs);
+    gl.linkProgram(this.shader);
+    if (!gl.getProgramParameter(this.shader, gl.LINK_STATUS)) {
       console.log("failed to link shader");
     }
 
-    const vb = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, vb);
-    const edgeCount = 6;
-    const vertexCount = edgeCount + 2;
-    var vertices = [0.0, 0.0, 0.0];
-    {
-      var step = common.toRadian(360.0 / edgeCount);
-      var i;
-      for (i = 0; i < edgeCount + 1; i++) {
-        vertices.push(Math.cos(step * i), Math.sin(step * i), 0.0);
-      }
-    }
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    this.vb = createPolygonVertexBuffer(6);
+    this.then = 0;
+    this.angleDeg = 0.0;
 
-    requestAnimationFrame(draw);
-
-    var then = 0;
-
-    var angleDeg = 0.0;
-
-    function draw(now) {
-      now *= 0.001;
-      const dt = now - then;
-      then = now;
-
-      resize();
-
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.clearColor(0.1, 0.1, 0.1, 1.0);
-      gl.clearDepth(1.0);
-      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-      gl.enable(gl.DEPTH_TEST);
-      gl.depthFunc(gl.LEQUAL);
-      gl.enable(gl.CULL_FACE);
-      gl.cullFace(gl.BACK);
-      gl.frontFace(gl.CCW);
-
-      const viewHeight = 5.0;
-      const viewWidth = viewHeight * (canvas.width / canvas.height);
-      const projMat = mat4.create();
-      mat4.ortho(
-        projMat,
-        -viewWidth * 0.5,
-        viewWidth * 0.5,
-        -viewHeight * 0.5,
-        viewHeight * 0.5,
-        0.1,
-        100.0
-      );
-
-      angleDeg += 30.0 * dt;
-      const modelMat = mat4.create();
-      const rotateAxis = vec3.create();
-      vec3.set(rotateAxis, 0, 0, 1);
-      mat4.rotate(modelMat, modelMat, common.toRadian(angleDeg), rotateAxis);
-      const viewMat = mat4.create();
-      var eye = vec3.create();
-      vec3.set(eye, 0, 0, 1);
-      var center = vec3.create();
-      var up = vec3.create();
-      vec3.set(up, 0, 1, 0);
-      mat4.lookAt(viewMat, eye, center, up);
-
-      gl.bindBuffer(gl.ARRAY_BUFFER, vb);
-      const posAttrib = gl.getAttribLocation(shader, "v_pos");
-      const modelUniform = gl.getUniformLocation(shader, "u_model");
-      const viewUniform = gl.getUniformLocation(shader, "u_view");
-      const projUniform = gl.getUniformLocation(shader, "u_proj");
-      gl.vertexAttribPointer(posAttrib, 3, gl.FLOAT, false, 0, 0);
-      gl.enableVertexAttribArray(posAttrib);
-
-      gl.useProgram(shader);
-
-      gl.uniformMatrix4fv(modelUniform, false, modelMat);
-      gl.uniformMatrix4fv(viewUniform, false, viewMat);
-      gl.uniformMatrix4fv(projUniform, false, projMat);
-
-      gl.drawArrays(gl.TRIANGLE_FAN, 0, vertexCount);
-
-      requestAnimationFrame(draw);
-    }
-
-    function resize() {
-      canvas.width = canvas.clientWidth;
-      canvas.height = canvas.clientHeight;
-    }
+    requestAnimationFrame(this.draw.bind(this));
   }
 
+  draw(now) {
+    now *= 0.001;
+    const dt = now - this.then;
+    this.then = now;
+
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.clearColor(0.1, 0.1, 0.1, 1.0);
+    gl.clearDepth(1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.enable(gl.DEPTH_TEST);
+    gl.depthFunc(gl.LEQUAL);
+    gl.enable(gl.CULL_FACE);
+    gl.cullFace(gl.BACK);
+    gl.frontFace(gl.CCW);
+
+    const viewHeight = 5.0;
+    const viewWidth = viewHeight * (canvas.width / canvas.height);
+    const projMat = mat4.create();
+    mat4.ortho(
+      projMat,
+      -viewWidth * 0.5,
+      viewWidth * 0.5,
+      -viewHeight * 0.5,
+      viewHeight * 0.5,
+      0.1,
+      100.0
+    );
+
+    this.angleDeg += 30.0 * dt;
+    const modelMat = mat4.create();
+    const translation = vec3.create();
+    vec3.set(translation, 0, -0.5, 0);
+    mat4.translate(modelMat, modelMat, translation);
+    const rotateAxis = vec3.create();
+    vec3.set(rotateAxis, 0, 0, 1);
+    mat4.rotate(modelMat, modelMat, common.toRadian(this.angleDeg), rotateAxis);
+    const viewMat = mat4.create();
+    var eye = vec3.create();
+    vec3.set(eye, 0, 0, 1);
+    var center = vec3.create();
+    var up = vec3.create();
+    vec3.set(up, 0, 1, 0);
+    mat4.lookAt(viewMat, eye, center, up);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.vb.buffer);
+    const posAttrib = gl.getAttribLocation(this.shader, "v_pos");
+    const modelUniform = gl.getUniformLocation(this.shader, "u_model");
+    const viewUniform = gl.getUniformLocation(this.shader, "u_view");
+    const projUniform = gl.getUniformLocation(this.shader, "u_proj");
+    gl.vertexAttribPointer(posAttrib, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(posAttrib);
+
+    gl.useProgram(this.shader);
+
+    gl.uniformMatrix4fv(modelUniform, false, modelMat);
+    gl.uniformMatrix4fv(viewUniform, false, viewMat);
+    gl.uniformMatrix4fv(projUniform, false, projMat);
+
+    gl.drawArrays(gl.TRIANGLE_FAN, 0, this.vb.vertexCount);
+
+    requestAnimationFrame(this.draw.bind(this));
+  }
   static get styles() {
     return css`
       :host {
@@ -221,6 +229,11 @@ class MainPage extends LitElement {
     `;
   }
 
+  recreateShape(edgeCount) {
+    destroyPolygonVertexBuffer(this.vb);
+    this.vb = createPolygonVertexBuffer(edgeCount);
+  }
+
   render() {
     return html`
       <canvas id="glCanvas"></canvas>
@@ -231,12 +244,18 @@ class MainPage extends LitElement {
       <ul class="menu-container">
         <li class="menu-item" @click=${() => {
           console.log("Portfolio");
+
+          this.recreateShape(3);
         }}><a href="#">PORTFOLIO</a></li>
         <li class="menu-item" @click=${() => {
           console.log("About Me");
+
+          this.recreateShape(5);
         }}><a href="#">ABOUT ME</a></li>
         <li class="menu-item" @click=${() => {
           console.log("Contact");
+
+          this.recreateShape(6);
         }}><a href="#">CONTACT</a></li>
       </ul>
       <div class="content-container">
