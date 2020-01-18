@@ -1,129 +1,30 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-	<meta charset="utf-8">
-	<meta class="hmm" name="viewport"
-		content="width=device-width, height=device-height, initial-scale=1, user-scalable=yes">
-	<title>Ilgwon Ha's dev blog</title>
-	<!--TODO: Need to debug if the desc is shown properly-->
-	<meta name="description" content="I upload any stuff I've made, learned, and found interesting">
-	<link rel="canonical" href="http://ilgwon.tech">
-	<style>
-		@media only screen and (min-width: 600px) {
-			body {
-				max-width: 55%;
-				font-size: 20px;
-			}
-		}
-
-		@media only screen and (max-width: 600px) {
-			body {
-				max-width: 90%;
-				font-size: 16px;
-			}
-		}
-
-		body {
-			background: #f2f2f2;
-			color: #444444;
-			font-family: Helvetica;
-			line-height: 1.8;
-			margin-top: 5%;
-			margin-bottom: 5%;
-			margin-right: auto;
-			margin-left: auto;
-		}
-
-		canvas {
-			width: 100%;
-			height: 100%;
-			margin: 0;
-		}
-
-		hr {
-			background-color: #d0d0d0;
-			height: 2px;
-			border: 0;
-		}
-	</style>
-</head>
-
-<body>
-	<canvas id="glCanvas">
-		<script>
-			main();
-			function main() {
-				const canvas = document.getElementById("glCanvas");
-				const gl = canvas.getContext("webgl");
-				if (gl == null) {
-					alert("Unable to initialize WebGL.Your browser or machine may not")
-					return;
-				}
-
-				function onResizeCanvas() {
-					canvas.width = window.innerWidth;
-					canvas.height = window.innerHeight;
-					console.log(window.innerWidth + ", " + window.innerHeight);
-					console.log(canvas.clientWidth + ", " + canvas.clientHeight);
-					gl.clearColor(1.0, 0.0, 0.0, 1.0);
-					gl.clear(gl.COLOR_BUFFER_BIT);
-				}
-				window.addEventListener("resize", onResizeCanvas);
-				onResizeCanvas();
-			}
-		</script>
-	</canvas>
-	<header>
-		<h1>About Me</h1>
-		<aside>
-			I upload any stuff I've made, learned, and found interesting.
-		</aside>
-	</header>
-	<hr>
-	<p>
-		“Throw a stick, and the servile dog wheezes and pants and stumbles to bring it to you. Do the same before a cat,
-		and he will eye you with coolly polite and somewhat bored amusement. And just as inferior people prefer the
-		inferior animal which scampers excitedly because someone else wants something, so do superior people respect the
-		superior animal which lives its own life and knows that the puerile stick-throwings of alien bipeds are none of
-		its business and beneath its notice. The dog barks and begs and tumbles to amuse you when you crack the whip.
-		That pleases a meekness-loving peasant who relishes a stimulus to his self importance. The cat, on the other
-		hand, charms you into playing for its benefit when it wishes to be amused; making you rush about the room with a
-		paper on a string when it feels like exercise, but refusing all your attempts to make it play when it is not in
-		the humour. That is personality and individuality and self-respect -- the calm mastery of a being whose life is
-		its own and not yours -- and the superior person recognises and appreciates this because he too is a free soul
-		whose position is assured, and whose only law is his own heritage and aesthetic sense.”
-		<br><br><strong>― H.P.Lovecraft</strong>
-	</p>
-	<!--
-	<p id="sizetest"></p>
-	<button type="button" class="collapsible">Open Collapsible</button>
-	<div class="content" style="display: none">
-		<p>Lorem ipsum...</p>
-	</div>
-	<script>
-		var coll = document.getElementsByClassName("collapsible");
-		for (var i = 0; i < coll.length; ++i) {
-			coll[i].addEventListener("click", function () {
-				this.classList.toggle("active");
-				var content = this.nextElementSibling;
-				if (content.style.display === "block") {
-					content.style.display = "none";
-				}
-				else {
-					content.style.display = "block";
-				}
-			});
-		}
-
-		sizetest = document.getElementById("sizetest");
-		var getSizeString = function () {
-			sizetest.innerHTML = window.innerWidth;
-		};
-		getSizeString();
-		window.addEventListener("resize", getSizeString);
-	</script>
--->
-</body>
-
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      class="hmm"
+      name="viewport"
+      content="width=device-width, height=device-height, initial-scale=1, user-scalable=yes"
+    />
+    <title>Ilgwon Ha's dev blog</title>
+    <!--TODO: Need to debug if the desc is shown properly-->
+    <meta
+      name="description"
+      content="I upload any stuff I've made, learned, and found interesting"
+    />
+    <link rel="canonical" href="http://ilgwon.tech" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: #030303;
+      }
+    </style>
+  </head>
+  <script type="module" src="./main-page.js"></script>
+    <main-page></main-page>
+  </body>
 </html>
