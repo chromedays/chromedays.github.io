@@ -173,6 +173,55 @@ class GLCanvas extends HTMLElement {
 }
 customElements.define("gl-canvas", GLCanvas);
 
+class MenuItem extends HTMLElement {
+  constructor(name, onClick) {
+    super();
+
+    this.className = "menu-item";
+
+    this.name = name;
+    this.onClick = onClick;
+
+    this.render();
+  }
+
+  render() {
+    this.innerHTML = `
+    <li id="${this.name}" ><a href="#">${this.name.toUpperCase()}</a></li>
+    `;
+    this.querySelector("a").addEventListener("click", this.onClick);
+  }
+}
+customElements.define("menu-item", MenuItem);
+
+class MenuBar extends HTMLElement {
+  constructor() {
+    super();
+
+    this.items = [];
+
+    this.render();
+  }
+
+  render() {
+    this.innerHTML = `
+        <ul id="menu-container">
+        </ul>
+    `;
+
+    var container = this.querySelector("ul");
+    this.items.forEach(item => {
+      container.appendChild(item);
+    });
+  }
+
+  addItem(item) {
+    this.items.push(item);
+    this.render();
+  }
+}
+customElements.define("menu-bar", MenuBar);
+
 class MainApp extends HTMLElement {
   constructor() {
     super();
@@ -187,36 +236,31 @@ class MainApp extends HTMLElement {
           <h1 class="title">ILGWON HA</h1>
           <h3 class="subtitle">GRAPHICS PROGRAMMER</h4>
         </header>
-        <ul id="menu-container">
-        </ul>
+        <menu-bar></menu-bar>
         <div class="content-container">
         </div>
     `;
 
     const canvas = this.querySelector("gl-canvas");
-    this.addMenuItem("blog", () => {
-      console.log("blog");
-      canvas.resetShape(3);
-    });
-    this.addMenuItem("about", () => {
-      console.log("about");
-      canvas.resetShape(6);
-    });
-    this.addMenuItem("resume", () => {
-      console.log("resume");
-      canvas.resetShape(12);
-    });
-  }
-
-  addMenuItem(name, onClick) {
-    var html = `
-    <li id="${name}" class="menu-item"><a href="#">${name.toUpperCase()}</a></li>
-    `;
-
-    const container = this.querySelector("#menu-container");
-    container.insertAdjacentHTML("beforeend", html);
-    const menuItem = container.querySelector(`#${name}`);
-    menuItem.querySelector("a").addEventListener("click", onClick);
+    const menuBar = this.querySelector("menu-bar");
+    menuBar.addItem(
+      new MenuItem("blog", () => {
+        console.log("blog");
+        canvas.resetShape(3);
+      })
+    );
+    menuBar.addItem(
+      new MenuItem("about", () => {
+        console.log("about");
+        canvas.resetShape(6);
+      })
+    );
+    menuBar.addItem(
+      new MenuItem("resume", () => {
+        console.log("resume");
+        canvas.resetShape(12);
+      })
+    );
   }
 }
 customElements.define("main-app", MainApp);
