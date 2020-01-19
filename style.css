@@ -44,7 +44,7 @@ a {
   font-size: 15px;
   margin-top: 0px;
 }
-.menu-container {
+#menu-container {
   display: flex;
   flex-direction: row;
   list-style: none;

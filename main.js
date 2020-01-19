@@ -92,7 +92,6 @@ function drawPolygon(gl, canvas, vb, shader, angleDeg) {
     100.0
   );
 
-  //this.angleDeg += 30.0 * dt;
   const modelMat = mat4.create();
   const translation = vec3.create();
   vec3.set(translation, 0, -0.5, 0);
@@ -188,30 +187,36 @@ class MainApp extends HTMLElement {
           <h1 class="title">ILGWON HA</h1>
           <h3 class="subtitle">GRAPHICS PROGRAMMER</h4>
         </header>
-        <ul class="menu-container">
-          <li id="portfolio" class="menu-item"><a href="#">PORTFOLIO</a></li>
-          <li id="about-me" class="menu-item"><a href="#">ABOUT ME</a></li>
-          <li id="contact" class="menu-item"><a href="#">CONTACT</a></li>
+        <ul id="menu-container">
         </ul>
         <div class="content-container">
         </div>
     `;
 
     const canvas = this.querySelector("gl-canvas");
-
-    this.querySelector("#portfolio").addEventListener("click", () => {
-      console.log("Portfolio");
+    this.addMenuItem("blog", () => {
+      console.log("blog");
       canvas.resetShape(3);
     });
-
-    this.querySelector("#about-me").addEventListener("click", () => {
-      console.log("About Me");
-      canvas.resetShape(5);
-    });
-    this.querySelector("#contact").addEventListener("click", () => {
-      console.log("Contact");
+    this.addMenuItem("about", () => {
+      console.log("about");
       canvas.resetShape(6);
     });
+    this.addMenuItem("resume", () => {
+      console.log("resume");
+      canvas.resetShape(12);
+    });
+  }
+
+  addMenuItem(name, onClick) {
+    var html = `
+    <li id="${name}" class="menu-item"><a href="#">${name.toUpperCase()}</a></li>
+    `;
+
+    const container = this.querySelector("#menu-container");
+    container.insertAdjacentHTML("beforeend", html);
+    const menuItem = container.querySelector(`#${name}`);
+    menuItem.querySelector("a").addEventListener("click", onClick);
   }
 }
 customElements.define("main-app", MainApp);
