@@ -19,6 +19,20 @@ class MenuItem extends HTMLElement {
 }
 customElements.define("menu-item", MenuItem);
 
+class DirectLinkItem extends MenuItem {
+  constructor(name, link) {
+    super(name, () => {});
+  }
+
+  render() {
+    super.render();
+
+    this.querySelector("a").href = "http://bit.ly/2NDHyNa";
+    this.querySelector("a").target = "_blank";
+  }
+}
+customElements.define("direct-link-item", DirectLinkItem);
+
 class MenuBar extends HTMLElement {
   constructor() {
     super();
@@ -115,14 +129,7 @@ class MainApp extends HTMLElement {
         this.render();
       })
     );
-    menuBar.addItem(
-      new MenuItem("resume", () => {
-        console.log("resume");
-        if (canvas != null) canvas.resetShape(12);
-        this.contentType = "resume";
-        this.render();
-      })
-    );
+    menuBar.addItem(new DirectLinkItem("resume", "http://bit.ly/2NDHyNa"));
   }
 }
 customElements.define("main-app", MainApp);
