@@ -14,20 +14,28 @@ class MenuItem extends HTMLElement {
     this.innerHTML = `
     <li id="${this.name}" ><a href="#">${this.name.toUpperCase()}</a></li>
     `;
-    this.querySelector("a").addEventListener("click", this.onClick);
+
+    if (this.onClick != null) {
+      console.log(this.name);
+      this.querySelector("a").addEventListener("click", this.onClick);
+    }
   }
 }
 customElements.define("menu-item", MenuItem);
 
 class DirectLinkItem extends MenuItem {
   constructor(name, link) {
-    super(name, () => {});
+    super(name, null);
+
+    this.link = link;
+
+    this.render();
   }
 
   render() {
     super.render();
 
-    this.querySelector("a").href = "http://bit.ly/2NDHyNa";
+    this.querySelector("a").href = this.link;
     this.querySelector("a").target = "_blank";
   }
 }
@@ -60,24 +68,6 @@ class MenuBar extends HTMLElement {
   }
 }
 customElements.define("menu-bar", MenuBar);
-
-class ResumePage extends HTMLElement {
-  constructor() {
-    super();
-    this.id = "content-container";
-    this.render();
-  }
-
-  render() {
-    // TODO:
-    this.innerHTML = `
-      <div style="width: 100vw; height: 100%">
-        <iframe style="width: 100vw; height: 100%" src="https://docs.google.com/document/d/e/2PACX-1vTGC_HE-Oo7poUPC1XWzK3G6t-uWDbxgkgrrLKCJrCB0zDhS-71pcAPn6k95cfzxQtg8wWUIPro4gWr/pub?embedded=true"></iframe>
-      </div>
-    `;
-  }
-}
-customElements.define("resume-page", ResumePage);
 
 class MainApp extends HTMLElement {
   constructor() {
