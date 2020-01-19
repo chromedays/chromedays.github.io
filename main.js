@@ -69,6 +69,21 @@ class MenuBar extends HTMLElement {
 }
 customElements.define("menu-bar", MenuBar);
 
+class ContentsContainer extends HTMLElement {
+  constructor() {
+    super();
+    this.render();
+  }
+
+  render() {
+    this.innerHTML = `
+        <div>
+        </div>
+    `;
+  }
+}
+customElements.define("contents-container", ContentsContainer);
+
 class MainApp extends HTMLElement {
   constructor() {
     super();
@@ -87,8 +102,7 @@ class MainApp extends HTMLElement {
           <h3 class="subtitle">GRAPHICS PROGRAMMER</h4>
         </header>
         <menu-bar></menu-bar>
-        <div id="projects-container">
-        </div>
+        <contents-container></contents-container>
     `;
 
     const canvas = document.querySelector("gl-canvas");

@@ -71,7 +71,6 @@ body {
 main-app {
   color: white;
   font-family: "Josefin Sans";
-  font-weight: lighter;
 }
 canvas {
   width: 100vw;
@@ -85,7 +84,6 @@ canvas {
 h1 {
   color: white;
   text-align: center;
-  font-weight: lighter;
 }
 h2,
 h3,
@@ -98,12 +96,10 @@ a {
   color: white;
   text-align: center;
   text-decoration: none;
-  font-weight: lighter;
 }
 #content-container {
   color: white;
   text-decoration: none;
-  font-weight: lighter;
   margin: 100px 30px 30px 30px;
   width: 100%;
   height: 100%;
@@ -118,6 +114,7 @@ a {
   font-size: 15px;
   margin-top: 0px;
   margin-bottom: 30px;
+  font-weight: normal;
 }
 #menu-container {
   display: flex;
