@@ -222,14 +222,36 @@ class MenuBar extends HTMLElement {
 }
 customElements.define("menu-bar", MenuBar);
 
+class ResumePage extends HTMLElement {
+  constructor() {
+    super();
+    this.id = "content-container";
+    this.render();
+  }
+
+  render() {
+    // TODO:
+    this.innerHTML = `
+      <div style="width: 100vw; height: 100%">
+        <embed src="resume.pdf" width="100%" height="100%">
+      </div>
+    `;
+  }
+}
+customElements.define("resume-page", ResumePage);
+
 class MainApp extends HTMLElement {
   constructor() {
     super();
+
+    this.contentType = "home";
+
     this.render();
   }
 
   render() {
     this.innerHTML = "";
+    // TODO: gl context is created every time the render func gets called
     this.innerHTML = `
         <gl-canvas></gl-canvas>
         <header>
@@ -237,28 +259,44 @@ class MainApp extends HTMLElement {
           <h3 class="subtitle">GRAPHICS PROGRAMMER</h4>
         </header>
         <menu-bar></menu-bar>
-        <div class="content-container">
-        </div>
     `;
 
     const canvas = this.querySelector("gl-canvas");
     const menuBar = this.querySelector("menu-bar");
+
+    switch (this.contentType) {
+      case "blog":
+        break;
+      case "about":
+        break;
+      case "resume":
+        console.log("resume page added");
+        this.appendChild(new ResumePage());
+        break;
+    }
+
     menuBar.addItem(
       new MenuItem("blog", () => {
         console.log("blog");
         canvas.resetShape(3);
+        this.contentType = "blog";
+        this.render();
       })
     );
     menuBar.addItem(
       new MenuItem("about", () => {
         console.log("about");
         canvas.resetShape(6);
+        this.contentType = "about";
+        this.render();
       })
     );
     menuBar.addItem(
       new MenuItem("resume", () => {
         console.log("resume");
         canvas.resetShape(12);
+        this.contentType = "resume";
+        this.render();
       })
     );
   }
