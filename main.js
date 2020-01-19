@@ -73,7 +73,7 @@ class MainApp extends HTMLElement {
   constructor() {
     super();
 
-    this.contentType = "home";
+    this.contentType = "projects";
 
     this.render();
   }
