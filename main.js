@@ -92,21 +92,9 @@ class MainApp extends HTMLElement {
     const canvas = document.querySelector("gl-canvas");
     const menuBar = this.querySelector("menu-bar");
 
-    switch (this.contentType) {
-      case "blog":
-        break;
-      case "about":
-        break;
-      case "resume":
-        console.log("resume page added");
-        this.appendChild(new ResumePage());
-        break;
-    }
-
     menuBar.addItem(
       new MenuItem("blog", () => {
         console.log("blog");
-        if (canvas != null) canvas.resetShape(3);
         this.contentType = "blog";
         this.render();
       })
@@ -114,8 +102,14 @@ class MainApp extends HTMLElement {
     menuBar.addItem(
       new MenuItem("about", () => {
         console.log("about");
-        if (canvas != null) canvas.resetShape(6);
         this.contentType = "about";
+        this.render();
+      })
+    );
+    menuBar.addItem(
+      new MenuItem("projects", () => {
+        console.log("projects");
+        this.contentType = "projects";
         this.render();
       })
     );
