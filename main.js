@@ -87,6 +87,8 @@ class MainApp extends HTMLElement {
           <h3 class="subtitle">GRAPHICS PROGRAMMER</h4>
         </header>
         <menu-bar></menu-bar>
+        <div id="projects-container">
+        </div>
     `;
 
     const canvas = document.querySelector("gl-canvas");

@@ -51,6 +51,23 @@ body {
   }
 }
 
+#projects-container {
+  display: grid;
+  grid-template-columns: 100px 100px 100px;
+  grid-gap: 10px;
+  justify-content: center;
+  align-content: center;
+}
+
+.project-item {
+  background-color: burlywood;
+  width: 100px;
+  height: 100px;
+  background-image: url("test.jpg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 main-app {
   color: white;
   font-family: "Josefin Sans";
@@ -106,11 +123,12 @@ a {
   display: flex;
   list-style: none;
   justify-content: center;
+  align-content: center;
   padding: 0px 0px 0px 0px;
   margin: auto;
+  margin-bottom: 40px;
   width: 80%;
   max-width: 600px;
-  min-width: 300px;
   align-items: center;
 }
 .menu-item {
