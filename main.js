@@ -119,7 +119,7 @@ class MainApp extends HTMLElement {
         this.render();
       })
     );
-    menuBar.addItem(new DirectLinkItem("resume", "http://bit.ly/2NDHyNa"));
+    menuBar.addItem(new DirectLinkItem("resume", "http://bit.ly/2NFEZdQ"));
   }
 }
 customElements.define("main-app", MainApp);
