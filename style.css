@@ -97,12 +97,16 @@ a {
   text-align: center;
   text-decoration: none;
 }
-#content-container {
+
+contents-container div {
   color: white;
   text-decoration: none;
-  margin: 100px 30px 30px 30px;
-  width: 100%;
-  height: 100%;
+  margin-top: 100px;
+  font-size: 20px;
+  margin: auto;
+  width: 80%;
+  max-width: 600px;
+  line-height: 1.6;
 }
 .title {
   font-size: 50px;
