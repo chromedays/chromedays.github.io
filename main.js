@@ -233,7 +233,7 @@ class ResumePage extends HTMLElement {
     // TODO:
     this.innerHTML = `
       <div style="width: 100vw; height: 100%">
-        <embed src="resume.pdf" width="100%" height="100%">
+        <iframe style="width: 100vw; height: 100%" src="https://docs.google.com/document/d/e/2PACX-1vTGC_HE-Oo7poUPC1XWzK3G6t-uWDbxgkgrrLKCJrCB0zDhS-71pcAPn6k95cfzxQtg8wWUIPro4gWr/pub?embedded=true"></iframe>
       </div>
     `;
   }
@@ -253,7 +253,6 @@ class MainApp extends HTMLElement {
     this.innerHTML = "";
     // TODO: gl context is created every time the render func gets called
     this.innerHTML = `
-        <gl-canvas></gl-canvas>
         <header>
           <h1 class="title">ILGWON HA</h1>
           <h3 class="subtitle">GRAPHICS PROGRAMMER</h4>
@@ -261,7 +260,7 @@ class MainApp extends HTMLElement {
         <menu-bar></menu-bar>
     `;
 
-    const canvas = this.querySelector("gl-canvas");
+    const canvas = document.querySelector("gl-canvas");
     const menuBar = this.querySelector("menu-bar");
 
     switch (this.contentType) {
