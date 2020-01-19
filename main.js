@@ -277,7 +277,7 @@ class MainApp extends HTMLElement {
     menuBar.addItem(
       new MenuItem("blog", () => {
         console.log("blog");
-        canvas.resetShape(3);
+        if (canvas != null) canvas.resetShape(3);
         this.contentType = "blog";
         this.render();
       })
@@ -285,7 +285,7 @@ class MainApp extends HTMLElement {
     menuBar.addItem(
       new MenuItem("about", () => {
         console.log("about");
-        canvas.resetShape(6);
+        if (canvas != null) canvas.resetShape(6);
         this.contentType = "about";
         this.render();
       })
@@ -293,7 +293,7 @@ class MainApp extends HTMLElement {
     menuBar.addItem(
       new MenuItem("resume", () => {
         console.log("resume");
-        canvas.resetShape(12);
+        if (canvas != null) canvas.resetShape(12);
         this.contentType = "resume";
         this.render();
       })
