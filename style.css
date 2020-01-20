@@ -2,10 +2,9 @@ body {
   margin: 0;
   padding: 0;
   width: 100vw;
-  height: 100vh;
-  overflow: hidden;
   max-width: 100%;
   background: #161616;
+  overflow-x: hidden;
 }
 
 @media (min-width: 0px) {
