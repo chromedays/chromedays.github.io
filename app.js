@@ -24,7 +24,7 @@ class App extends HTMLElement {
       new SimplePageMenuItem(
         "about",
         pageContainer,
-        /*html*/ `<div>My name is Ilgwon. I am a junior student majoring in BS of CS in Real-Time Interactive Simulation at DigiPen Institute of Technology.</div>`
+        /*html*/ `<div>I am a junior at DigiPen Institute of Technology pursuing "BS in CS in RTIS", a specialized major that focuses on the computer science of Real-Time Interactive Simulation.</div>`
       ),
       new LinkMenuItem(
         "resume",
