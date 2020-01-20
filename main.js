@@ -85,7 +85,7 @@ class ContentsContainer extends HTMLElement {
       case "about":
         this.innerHTML = `
         <div>
-        My name is Ilgwon. I am a junior student majoring in BS in CS in Real-Time Interactive Simulation at DigiPen Institute of Technology.
+        My name is Ilgwon. I am a junior student majoring in BS of CS in Real-Time Interactive Simulation at DigiPen Institute of Technology.
         </div>
     `;
         break;
