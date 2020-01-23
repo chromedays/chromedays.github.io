@@ -10,7 +10,7 @@ class App extends HTMLElement {
     this.innerHTML = /*html*/ `
       <header>
         <h1 id="title">ILGWON HA</h1>
-        <h3 id="subtitle">GRAPHICS PROGRAMMER</h4>
+        <h3 id="subtitle">GAME PROGRAMMER</h4>
       </header>
       <menu-bar></menu-bar>
       <div id="page-container"></div>
